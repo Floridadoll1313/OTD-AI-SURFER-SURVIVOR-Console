@@ -1,14 +1,15 @@
-import express from 'express';
-import path from 'path';
-import homepageRouter from './homepage';
-
-const app = express();
-
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve('public/dashboard.html'));
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+{
+  "name": "otd-ai-surfer-survivor-console",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "scripts": {
+    "start": "npx tsx server.ts"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.7",
+    "typescript": "^5.2.2"
+  }
+}
