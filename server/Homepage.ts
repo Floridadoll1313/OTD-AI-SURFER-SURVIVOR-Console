@@ -1,10 +1,14 @@
 import { Router } from 'express';
-import path from 'path';
 
 const router = Router();
 
+// Basic homepage route
 router.get('/', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+  res.send({
+    status: 'ok',
+    message: 'OTD AI Surfer Survivor Console backend is running',
+    timestamp: new Date().toISOString()
+  });
 });
 
 export default router;
