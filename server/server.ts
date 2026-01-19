@@ -1,27 +1,37 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
-import homepageRouter from './server/homepage';
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-// Serve static files from public folder
-app.use(express.static('public'));
+// Choose ONE homepage:
+import homepageRouter from './homepage-cinematic';
+// import homepageRouter from './homepage-basic';
+// import homepageRouter from './homepage-serve-react';
 
+import dashboardRouter from './dashboard';
+import stripeWebhookRouter from './stripe-webhook';
+import survivorRouter from './survivor-island';
+import surfboardRouter from './surfboards';
+import healthRouter from './health';
+import notFoundRouter from './not-found';
+import errorHandler from './error-handler';
 
-
-
-
-
-
-
-
-
-
-// Use your homepage router
+// Mount routes
 app.use('/', homepageRouter);
+app.use('/', dashboardRouter);
+app.use('/', stripeWebhookRouter);
+app.use('/', survivorRouter);
+app.use('/', surfboardRouter);
+app.use('/', healthRouter);
 
-// Start the server
+// 404 + error handler
+app.use(notFoundRouter);
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🌊 OTD AI Surfer Survivor Console running on port ${PORT}`);
 });
