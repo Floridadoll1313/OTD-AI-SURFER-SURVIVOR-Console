@@ -8,7 +8,8 @@ app.use(express.json());
 
 // Choose ONE homepage:
 import homepageRouter from './homepage-cinematic';
-
+// import homepageRouter from './homepage-basic';
+// import homepageRouter from './homepage-serve-react';
 
 import dashboardRouter from './dashboard';
 import stripeWebhookRouter from './stripe-webhook';
