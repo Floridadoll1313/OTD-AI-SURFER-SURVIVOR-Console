@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("OTD AI Surfer Survivor Console server is running!");
 });
 
-// Stripe test route (ONLY ONE)
+// Stripe test route
 app.get("/stripe-test", async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
@@ -26,6 +26,28 @@ app.get("/stripe-test", async (req, res) => {
     res.json({ ok: true, id: paymentIntent.id });
   } catch (err: any) {
     res.json({ ok: false, error: err.message });
+  }
+});
+
+// REAL checkout route for your front-end
+app.post("/create-payment-intent", async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    if (!amount) {
+      return res.status(400).json({ error: "Amount is required" });
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "usd",
+    });
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
   }
 });
 
