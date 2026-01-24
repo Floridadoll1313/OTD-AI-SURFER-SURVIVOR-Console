@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import Stripe from "stripe";
 
 const app = express();
 
@@ -17,5 +18,16 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+});
+app.get("/stripe-test", async (req, res) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 100,
+      currency: "usd",
+    });
+    res.json({ ok: true, id: paymentIntent.id });
+  } catch (err: any) {
+    res.json({ ok: false, error: err.message });
+  }
 });
 
